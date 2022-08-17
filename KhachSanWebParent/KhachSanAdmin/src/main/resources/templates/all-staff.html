@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments::head_page('Tất cả thành viên')"></head>
+
+<body>
+	<div class="main-wrapper">
+		<div th:replace="header::header"></div>
+		<div th:replace="sidebar::sidebar"></div>
+		<div class="page-wrapper">
+			<div class="content container-fluid">
+				<div class="page-header">
+					<div class="row align-items-center">
+						<div th:if="${message != null}" class="alert alert-success text-center">
+							[[${message}]]
+						</div>
+						<div class="col">
+							<div class="mt-5">
+								<h4 class="card-title float-left mt-2">Tất cả thành viên</h4> <a th:href="@{/thanh-vien/them-thanh-vien}" class="btn btn-primary float-right veiwbutton">Thêm thành viên</a> </div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<form th:action="@{/thanh-vien}">
+							<div class="row formtype">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Nhập từ khóa</label>
+										<input class="form-control" type="search" name="keyword"> </div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Tìm kiếm</label>
+										<button type="submit" class="btn btn-success btn-block mt-0 search_button"> Tìm kiếm </button>
+									</div>
+								</div>
+								<div class="col-md-1">
+									<label></label>
+									<button type="button" class="btn btn-dark mt-2" onclick="clearFilter()">Trở lại</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card card-table">
+							<div class="card-body booking_card">
+								<div class="table-responsive">
+									<table class="datatable table table-stripped table table-hover table-center mb-0">
+										<thead>
+											<tr>
+												<th>Họ tên</th>
+												<th>ID</th>
+												<th>Username</th>
+												<th>Số điện thoại</th>
+												<th>Ngày sinh</th>
+												<th>Giới tính</th>
+												<th>Quyền</th>
+												<th>Trạng thái</th>
+												<th class="text-right">Hành động</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="acc: ${accountList}">
+												<td>
+													<h2 class="table-avatar">
+                                                    <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" th:src="@{${acc.photosImagePath}}" alt="User Image"></a>
+                                                    <a href="profile.html">[[${acc.fullName}]] <span>#0001</span></a>
+                                                    </h2>
+                                                </td>
+												<td>[[${acc.id}]]</td>
+												<td>[[${acc.username}]]</td>
+												<td>[[${acc.phone}]]</td>
+												<td th:text="${#dates.format(acc.dateOfBirth, 'dd-MM-yyyy')}"></td>
+												<td th:if="${acc.gender == 1}">Nam</td>
+												<td th:if="${acc.gender == 2}">Nữ</td>
+												<td>[[${acc.role.name}]]</td>
+												<td>
+													<div class="actions">
+														<a th:if="${acc.enabled == true}" th:href="@{'/thanh-vien/' + ${acc.id} + '/enabled/false'}" class="btn btn-sm bg-success-light mr-2" title="Nhấn để khóa tài khoản này">Mở</a>
+														<a th:if="${acc.enabled == false}" th:href="@{'/thanh-vien/' + ${acc.id} + '/enabled/true'}" class="btn btn-sm bg-danger-light mr-2" title="Nhấn để mở khóa tài khoản này">Đã khóa</a>
+													</div>
+												</td>
+												<td>
+													<div class="actions">
+														<a th:href="@{'thanh-vien/sua/' + ${acc.id}}" class="fas fa-edit fa-2x mr-2" style="color: #00bf6f" title="Sửa thông tin thành viên này"></a>
+														<a id="deleteLink" data-toggle="modal" data-target="#delete_asset" th:accId="${acc.id}" class="fas fa-trash fa-2x mr-2" style="color: #0b2e13" title="Xóa thành viên này"></a>
+														<form th:action="@{'thanh-vien/xoa/' + ${acc.id} }" th:hidden="true" id="deleteForm"></form>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="delete_asset" class="modal fade delete-modal" role="dialog">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-body text-center"> <img th:src="@{/img/sent.png}" alt="" width="50" height="46">
+							<h3 class="delete_class">Bạn chắc chắn muốn xóa?</h3>
+							<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Hủy</a>
+								<button href="submit" class="btn btn-danger" onclick="$($('#deleteForm').submit())">Xác nhận</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="fragments::script">
+	</th:block>
+	<script>
+		function clearFilter() {
+			window.location = "[[@{/thanh-vien/}]]";
+		}
+	</script>
+</body>
+
+</html>
