@@ -1,4 +1,4 @@
-# khach-san
+# Quản lý khách sạn
 Website hỗ trợ đặt phòng trực tuyến và quản lý khách sạn
 - Các chức năng chính:
   + Booking
