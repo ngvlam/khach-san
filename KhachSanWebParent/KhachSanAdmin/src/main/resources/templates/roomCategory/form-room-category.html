@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments::head_page('Tất cả các phòng')"></head>
+
+<body>
+	<div class="main-wrapper">
+		<div th:replace="header::header"></div>
+		<div th:replace="sidebar::sidebar"></div>
+		<div class="page-wrapper">
+			<div class="content container-fluid">
+				<div class="page-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<h3 class="page-title mt-5" th:text="${pageTitle}"></h3> </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<form th:action="@{/loai-phong/save}" method="post" th:object="${roomCategory}" enctype="multipart/form-data">
+							<div class="row formtype divForm">
+								<input type="hidden" th:field="*{id}">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Tên loại</label>
+										<input type="text" th:field="*{name}" class="form-control">
+									</div>
+								</div>
+<!--								<div class="col-md-4">-->
+<!--									<div class="form-group">-->
+<!--										<label>Tiện nghi</label> <br>-->
+<!--										<input type="checkbox" name="amenities" value="Wifi">Wifi-->
+<!--										<input type="checkbox" name="amenities" value="A/C">Điều hòa-->
+<!--										<input type="checkbox" name="amenities" value="TV">TV-->
+<!--										<input type="checkbox" name="amenities" value="Safe">Két sắt-->
+<!--										<input type="checkbox" name="amenities" value="Telephone">Điện thoại-->
+<!--										<input type="checkbox" name="amenities" value="Kitchen">Nấu ăn-->
+<!--									</div>-->
+<!--								</div>-->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Giá</label>
+										<input type="text" th:field="*{price}" class="form-control">
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Miêu tả</label>
+										<textarea class="form-control" rows="5" th:field="*{description}"></textarea>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Ảnh chính</label>
+										<div class="custom-file mb-3">
+											<input type="file" class="custom-file-input" id="customFile" name="fileImage" accept="image/png, image/jpeg">
+											<img th:src="@{${roomCategory.mainImagePath}}" alt="Photos preview" id="thumbnail" width="100">
+											<label class="custom-file-label" for="customFile">Chọn tệp</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2" id="divExtraImage0">
+									<div class="form-group">
+										<div id="extraImageHeader0"><label>Ảnh #1</label></div>
+										<div class="custom-file mb-3">
+											<input type="file" class="custom-file-input" name="extraImage" accept="image/png, image/jpeg">
+											<img th:src="@{${roomCategory.mainImagePath}}" alt="Photos preview" id="extraThumbnail0" width="100">
+											<label class="custom-file-label" for="customFile">Chọn tệp</label>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<button type="submit" class="btn btn-primary buttonedit ml-2">Lưu</button>
+							<button type="button" class="btn btn-primary buttonedit" id="btnCancel">Hủy bỏ</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="fragments::script">
+
+	</th:block>
+<script>
+	defaultImageThumbnailSrc = "[[@{/img/default-image.jpg}]]"
+	var extraImagesCount = 0;
+	$("#btnCancel").on("click", function () {
+		window.location = "[[@{/loai-phong}]]";
+	});
+
+	$("input[name='extraImage']").each(function (index){
+			$(this).change(function () {
+				showExtraImageThumbnail(this, index)
+			})
+	})
+
+	function showExtraImageThumbnail(fileInput, index) {
+		var file = fileInput.files[0];
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$("#extraThumbnail" + index).attr("src", e.target.result);
+		}
+		reader.readAsDataURL(file);
+		if (index >= extraImagesCount ) {
+			addExtraImageSection(index + 1);
+		}
+	}
+
+	function addExtraImageSection(index) {
+		html = `<div class="col-md-2" id="divExtraImage${index}">
+					<div class="form-group">
+						<div id="extraImageHeader${index}"><label>Ảnh ${index + 1}</label></div>
+						<div class="custom-file mb-3">
+						<input type="file" class="custom-file-input" name="extraImage" accept="image/png, image/jpeg" onchange="showExtraImageThumbnail(this, ${index})">
+						<img src=${defaultImageThumbnailSrc} alt="Photos preview" id="extraThumbnail${index}" width="100">
+						<label class="custom-file-label" for="customFile">Chọn tệp</label>
+					</div>
+					</div>
+				</div>`
+		htmlLinkRemove = `
+		<a class="btn fas fa-times-circle fa-1x float-right" title="Remove this image" href="javascript:removeExtraImage(${index -1})"></a>
+		`;
+
+		$('.divForm').append(html);
+
+		$("#extraImageHeader" + (index - 1)).append(htmlLinkRemove);
+		extraImagesCount++;
+	}
+
+	function removeExtraImage(index) {
+		$("#divExtraImage" + index).remove();
+	}
+</script>
+	<script th:src="@{/js/common_form.js}"></script>
+
+
+</body>
+
+</html>

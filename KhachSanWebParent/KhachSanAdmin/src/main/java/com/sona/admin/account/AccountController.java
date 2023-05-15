@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,16 +23,21 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping("/thanh-vien")
-    public String listAll(Model model, @Param("keyword") String keyword) {
+    public String listAll(Model model, @Param("keyword") String keyword, Principal principal) {
+        String currentUsername = principal.getName();
+        Account currentAccount = accountService.findAccountByUsername(currentUsername);
+
         if (keyword != null) {
             List<Account> accountList = accountService.getByKeyword(keyword);
+            accountList.remove(currentAccount);
             model.addAttribute("accountList", accountList);
             model.addAttribute("keyword", keyword);
         } else {
             List<Account> accountList = accountService.listAll();
+            accountList.remove(currentAccount);
             model.addAttribute("accountList", accountList);
         }
-        return "all-staff";
+        return "staff/all-staff";
     }
 
     @GetMapping("/thanh-vien/them-thanh-vien")
@@ -41,7 +47,7 @@ public class AccountController {
         account.setEnabled(true);
         model.addAttribute("account", account);
         model.addAttribute("roleList", roleList);
-        return "add-staff";
+        return "staff/add-staff";
     }
 
     @PostMapping("/thanh-vien/save")
@@ -72,7 +78,7 @@ public class AccountController {
 
             model.addAttribute("account", account);
             model.addAttribute("roleList", roleList);
-            return "edit-staff";
+            return "staff/edit-staff";
         } catch (UserNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/thanh-vien";

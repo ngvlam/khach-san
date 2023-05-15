@@ -71,3 +71,9 @@ function showModalDialog(title, message) {
     $("#modalDialog").modal();
 }
 
+function submitFormDelete(id) {
+    $('.btnConfirm').on('click', function () {
+        $("#deleteForm" + id).submit();
+    })
+}
+

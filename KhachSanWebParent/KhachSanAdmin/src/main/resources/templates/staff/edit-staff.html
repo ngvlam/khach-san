@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments::head_page('Thêm thành viên')"></head>
+
+<body>
+<div class="main-wrapper">
+    <div th:replace="header::header"></div>
+    <div th:replace="sidebar::sidebar"></div>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title mt-5">Sửa thành viên</h3> </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form th:action="@{/thanh-vien/save}" method="post" id="formAdd" th:object="${account}" enctype="multipart/form-data" onsubmit="return checkBefore(this)">
+                        <div class="row">
+                            <input type="hidden" th:field="*{id}">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Họ tên</label>
+                                    <input class="form-control" type="text" th:field="*{fullName}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input class="form-control" type="text" th:field="*{username}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input th:if="${account.id == null}" type="password" th:field="*{password}" class="form-control" required minlength="8" maxlength="20">
+                                    <input th:if="${account.id != null}" type="password" th:field="*{password}" class="form-control" minlength="8" maxlength="20">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input class="form-control" type="text" th:field="*{phone}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Ngày sinh</label>
+                                    <div>
+                                        <input type="date" class="form-control" th:name="dateOfBirth" th:value="${account.dateOfBirth}?${#dates.format(account.dateOfBirth, 'yyyy-MM-dd')}:''" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label>Giới tính</label> <br>
+                                    <input type="checkbox" value="1" th:field="*{gender}">Nam <br>
+                                    <input type="checkbox" value="2" th:field="*{gender}">Nữ
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label>Địa chỉ</label> <br>
+                                    <input class="form-control" type="text" th:field="*{address}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label>Enable</label> <br>
+                                    <input type="checkbox" th:field="*{enabled}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Ảnh đại diện</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="customFile" name="avatar" accept="image/png, image/jpeg">
+                                    <img th:src="@{${account.photosImagePath}}" alt="Photos preview" id="thumbnail" width="100">
+                                    <label class="custom-file-label" for="customFile">Chọn tệp</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Quyền</label>
+                                    <select class="form-control" th:field="*{role}">
+                                        <option th:each="role: ${roleList}" th:value="${role.id}" th:text="${role.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary buttonedit ml-2">Sửa</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade text-center" id="modalDialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Warning</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <span id="modalBody"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments::script">
+
+</th:block>
+<script th:src="@{/js/common_form.js}"></script>
+<script>
+    $(function() {
+        $('#datetimepicker3').datetimepicker({
+            format: 'LT'
+        });
+    });
+    function checkBefore(form) {
+        url = "[[@{/acc/check_username}]]";
+        return checkUsernameUnique(form, url);
+    }
+</script>
+</body>
+
+</html>

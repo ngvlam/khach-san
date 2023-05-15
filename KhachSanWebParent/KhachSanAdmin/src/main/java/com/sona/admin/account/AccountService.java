@@ -48,8 +48,12 @@ public class AccountService {
         account.setPassword(encodedPassword);
     }
 
+    public Account findAccountByUsername(String username) {
+        return acccountRepository.getAccountByUsername(username);
+    }
+
     public boolean isUsernameUnique(Integer id, String username) {
-        Account accountByUsername = acccountRepository.getAccountByUsername(username);
+        Account accountByUsername = findAccountByUsername(username);
         if (accountByUsername == null) return true;
         boolean isCreatingNew = (id == null);
         if (isCreatingNew) {

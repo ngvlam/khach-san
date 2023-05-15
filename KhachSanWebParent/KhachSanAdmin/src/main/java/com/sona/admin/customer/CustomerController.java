@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,7 @@ public class CustomerController {
             List<Customer> customerList = customerService.listAll();
             model.addAttribute("customerList", customerList);
         }
-        return "all-customers";
+        return "customer/all-customers";
     }
 
 
@@ -38,11 +40,14 @@ public class CustomerController {
         Customer customer = new Customer();
         model.addAttribute("pageTitle", "Thêm khách hàng");
         model.addAttribute("customer", customer);
-        return "form-customer";
+        return "customer/form-customer";
     }
 
     @PostMapping("/khach-hang/save")
-    public String saveCustomer(Customer customer, RedirectAttributes redirectAttributes) {
+    public String saveCustomer(@Valid Customer customer, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+           return  "customer/form-customer";
+        }
         customerService.save(customer);
         redirectAttributes.addFlashAttribute("message", "Thêm khách hàng mới thành công");
         return "redirect:/khach-hang";
@@ -55,8 +60,9 @@ public class CustomerController {
                             RedirectAttributes redirectAttributes) {
         try {
             Customer customer = customerService.get(id);
+            model.addAttribute("pageTitle", "Sửa khách hàng");
             model.addAttribute("customer", customer);
-            return "form-customer";
+            return "customer/form-customer";
         } catch (CustomerNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/khach-hang";

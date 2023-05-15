@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments::head_page('Sona Hotel')">
+
+</head>
+
+<body>
+    <th:block th:replace="fragments::header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Blog</h2>
+                        <div class="bt-option">
+                            <a href="/home">Trang chủ</a>
+                            <span>Blog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog-section blog-page spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg" onclick="window.location.href='/blog-detail'">
+                        <div class="bi-text">
+                            <span class="b-tag">Chuyến đi</span>
+                            <h4><a href="./blog-details.html">Đến Đà Nẵng</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 12 tg.8, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Cắm trại</span>
+                            <h4><a href="./blog-details.html">Chọn nơi cắm trại yên tĩnh</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 11 tg.8, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Sự kiện</span>
+                            <h4><a href="./blog-details.html">Copper Canyon</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 31 tg.7, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-4.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Trivago</span>
+                            <h4><a href="./blog-details.html">A Time Travel Postcard</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 22th tg.7, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-5.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Cắm trại</span>
+                            <h4><a href="./blog-details.html">A Time Travel Postcard</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 30 tg.4, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-6.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Chuyến đi</span>
+                            <h4><a href="./blog-details.html">Virginia Travel For Kids</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 30 tg.4, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-7.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Chuyến đi</span>
+                            <h4><a href="./blog-details.html">Bryce Canyon A Stunning</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 30 tg.4, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-8.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Sự kiện & Du lịch</span>
+                            <h4><a href="./blog-details.html">Motorhome Or Trailer</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 30 tg.4, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-item set-bg" data-setbg="img/blog/blog-9.jpg">
+                        <div class="bi-text">
+                            <span class="b-tag">Cắm trại</span>
+                            <h4><a href="./blog-details.html">Lost In Lagos Portugal</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 30 tg.4, 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="load-more">
+                        <a href="#" class="primary-btn">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer th:replace="fragments::footer"></footer>
+
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

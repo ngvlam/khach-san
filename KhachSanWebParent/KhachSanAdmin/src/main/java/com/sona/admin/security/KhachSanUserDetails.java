@@ -62,5 +62,8 @@ public class KhachSanUserDetails implements UserDetails {
     public String getPhoto() {
         return this.account.getPhoto();
     }
+    public Integer getId() {
+        return this.account.getId();
+    }
 
 }

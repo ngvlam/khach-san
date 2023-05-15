@@ -21,14 +21,6 @@ public class WebSecurityConfig {
         return new KhachSanUserDetailsService();
     }
 
-
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(PasswordEncoder());
-        return authenticationProvider;
-    }
-
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authConfig) throws Exception {
@@ -42,7 +34,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().and().formLogin()
+        http.authorizeRequests()
+                .antMatchers("/thanh-vien/**").hasAuthority("Admin")
+                .antMatchers("room/**").hasAuthority("Admin")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
                 .loginPage("/login").usernameParameter("username").defaultSuccessUrl("/").permitAll()
                 .and().logout().permitAll()
                 .and().rememberMe()

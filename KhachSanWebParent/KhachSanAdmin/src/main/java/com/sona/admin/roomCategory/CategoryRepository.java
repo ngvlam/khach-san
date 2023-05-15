@@ -11,4 +11,6 @@ public interface CategoryRepository extends CrudRepository<RoomCategory, Integer
 
     @Query("SELECT r FROM RoomCategory r WHERE concat(r.id, ' ', r.name, '', r.description) like %?1%")
     List<RoomCategory> findByKeyword(String keyword);
+
+    Long countById(Integer id);
 }

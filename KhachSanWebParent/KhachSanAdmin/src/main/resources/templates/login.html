@@ -11,13 +11,12 @@
 					<div class="login-left"> <img class="img-fluid" th:src="@{/img/default-avatar.png}" alt="Logo"> </div>
 					<div class="login-right">
 						<div class="login-right-wrap">
-							<div th:if="${param.error}">
-								<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-							</div>
+
 
 							<div th:if="${param.logout}">
 								<p class="text-warning">You have been logged out</p>
 							</div>
+
 							<h1>Đăng nhập</h1>
 							<p class="account-subtitle">Access to our dashboard</p>
 							<form th:action="@{/login}" method="post">
@@ -29,6 +28,10 @@
 								<p>
 									<input type="checkbox" name="remember-me"> &nbsp;Remember Me
 								</p>
+								<div th:if="${param.error}">
+									<!--								<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>-->
+									<p class="text-danger">Tên đăng nhập hoặc mật khẩu không đúng</p>
+								</div>
 								<div class="form-group">
 									<button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
 								</div>
